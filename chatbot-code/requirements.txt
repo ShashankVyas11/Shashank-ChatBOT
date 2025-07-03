@@ -8,3 +8,7 @@ gunicorn==21.2.0
 transformers==4.40.1
 torch>=2.0.1
 Pillow
+diffusers==0.27.2
+accelerate==0.27.2
+safetensors==0.4.2
+scipy
