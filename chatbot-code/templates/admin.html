@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center">👑 Admin Dashboard</h2>
+
+    <h4 class="mt-4">📋 All Users</h4>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Admin</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ "✅" if user.is_admin else "❌" }}</td>
+                <td>
+                    {% if not user.is_admin %}
+                    <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                    </form>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="mt-4">💬 Recent Chats</h4>
+    <ul class="list-group">
+        {% for chat in chats %}
+        <li class="list-group-item">
+            <strong>User #{{ chat.user_id }}:</strong><br>
+            <strong>Prompt:</strong> {{ chat.prompt }}<br>
+            <strong>Response:</strong> {{ chat.response }}<br>
+            <small class="text-muted">{{ chat.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
