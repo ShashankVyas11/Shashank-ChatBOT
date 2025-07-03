@@ -10,7 +10,7 @@ from forms import RegistrationForm, LoginForm
 from utils.openai_tools import ask_llama, analyze_image, generate_image
 
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "shashank-chat-secret"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "fallback-secret")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["UPLOAD_FOLDER"] = os.path.join(os.path.dirname(__file__), "uploads")
 
