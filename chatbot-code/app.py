@@ -7,7 +7,7 @@ import os
 
 from models import db, User, Chat
 from forms import RegistrationForm, LoginForm
-from utils.openai_tools import ask_llama, analyze_image, generate_image
+from utils.local_llm import ask_llama, analyze_image, generate_image
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "fallback-secret")
@@ -153,11 +153,10 @@ def create_admin():
         print("✅ Default admin created (admin@bot.com / admin123)")
 
 
-# ✅ App Entry (Render compatible)
+# ✅ App Entry
 if __name__ == "__main__":
     with app.app_context():
         os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
         db.create_all()
         create_admin()
-    port = int(os.environ.get("PORT", 5000))  # Render requires dynamic port binding
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)

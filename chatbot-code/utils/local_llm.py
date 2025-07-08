@@ -6,7 +6,7 @@ from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
 from diffusers import StableDiffusionPipeline
 
-# ========== 🔍 BLIP: Image Captioning Setup ==========
+# ==========  BLIP: Image Captioning Setup ==========
 blip_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
 blip_model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
@@ -28,10 +28,10 @@ def analyze_image(image_path):
         return caption
 
     except Exception as e:
-        return f"⚠️ Error analyzing image: {str(e)}"
+        return f" Error analyzing image: {str(e)}"
 
 
-# ========== 💬 LLaMA (via Ollama) Setup ==========
+# ==========  LLaMA (via Ollama) Setup ==========
 def ask_llama(prompt):
     """
     Send a prompt to local LLaMA 3 model via Ollama CLI.
@@ -50,12 +50,12 @@ def ask_llama(prompt):
         return result.stdout.strip()
 
     except subprocess.CalledProcessError as e:
-        return f"⚠️ LLaMA error: {e.stderr.strip()}"
+        return f" LLaMA error: {e.stderr.strip()}"
     except Exception as e:
-        return f"⚠️ Unexpected error: {str(e)}"
+        return f" Unexpected error: {str(e)}"
 
 
-# ========== 🎨 Stable Diffusion: Image Generation ==========
+# ==========  Stable Diffusion: Image Generation ==========
 try:
     model_id = "runwayml/stable-diffusion-v1-5"
     pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float32)
@@ -63,7 +63,7 @@ try:
     pipe = pipe.to(device)
 except Exception as e:
     pipe = None
-    print(f"⚠️ Failed to load Stable Diffusion model: {e}")
+    print(f" Failed to load Stable Diffusion model: {e}")
 
 def generate_image(prompt):
     """
@@ -71,7 +71,7 @@ def generate_image(prompt):
     """
     try:
         if pipe is None:
-            return "⚠️ Stable Diffusion model is not loaded."
+            return " Stable Diffusion model is not loaded."
 
         # Get absolute static folder path
         base_dir = os.path.dirname(os.path.abspath(__file__))  # .../chatbot-code/utils
@@ -89,10 +89,10 @@ def generate_image(prompt):
         return "/static/generated.png"
 
     except Exception as e:
-        return f"⚠️ Image generation error: {str(e)}"
+        return f" Image generation error: {str(e)}"
 
 
-# ========== ☁️ (Optional) Dummy Weather API ==========
+# ==========  (Optional) Dummy Weather API ==========
 def get_weather(location, unit="celsius"):
     """
     Dummy weather function for future extension.
