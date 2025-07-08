@@ -145,7 +145,7 @@ def create_admin():
         admin_user = User(
             username="admin",
             email=admin_email,
-            password_hash=generate_password_hash("admin123"),
+            password_hash=generate_password_hash("create your own"),
             is_admin=True
         )
         db.session.add(admin_user)
